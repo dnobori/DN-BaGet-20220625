@@ -36,11 +36,11 @@ namespace BaGet
                 options.ForwardedHostHeaderName = "X-Forwarded-Host";
                 options.ForwardedProtoHeaderName = "X-Forwarded-Proto";
 
-                options.KnownNetworks.Clear();
-                options.KnownProxies.Clear();
+                //options.KnownNetworks.Clear();
+                //options.KnownProxies.Clear();
 
-                options.KnownNetworks.Add(new IPNetwork(IPAddress.Any, 0));
-                options.KnownNetworks.Add(new IPNetwork(IPAddress.IPv6Any, 0));
+                //options.KnownNetworks.Add(new IPNetwork(IPAddress.Any, 0));
+                //options.KnownNetworks.Add(new IPNetwork(IPAddress.IPv6Any, 0));
             });
             // TODO: Ideally we'd use:
             //
