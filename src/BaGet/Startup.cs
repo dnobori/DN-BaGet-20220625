@@ -27,22 +27,6 @@ namespace BaGet
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<ForwardedHeadersOptions>(options =>
-            {
-                options.ForwardLimit = 4;
-                options.ForwardedHeaders = ForwardedHeaders.All;
-
-                options.ForwardedForHeaderName = "X-Forwarded-For";
-                options.ForwardedHostHeaderName = "X-Forwarded-Host";
-                options.ForwardedProtoHeaderName = "X-Forwarded-Proto";
-
-                //options.KnownNetworks.Clear();
-                //options.KnownProxies.Clear();
-
-                //options.KnownNetworks.Add(new IPNetwork(IPAddress.Any, 0));
-                //options.KnownNetworks.Add(new IPNetwork(IPAddress.Loopback, 32));
-                //options.KnownNetworks.Add(new IPNetwork(IPAddress.IPv6Any, 0));
-            });
             // TODO: Ideally we'd use:
             //
             //       services.ConfigureOptions<ConfigureBaGetOptions>();
@@ -71,6 +55,22 @@ namespace BaGet
             services.AddSingleton<IConfigureOptions<MvcRazorRuntimeCompilationOptions>, ConfigureRazorRuntimeCompilation>();
 
             services.AddCors();
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardLimit = 4;
+                options.ForwardedHeaders = ForwardedHeaders.All;
+
+                options.ForwardedForHeaderName = "X-Forwarded-For";
+                options.ForwardedHostHeaderName = "X-Forwarded-Host";
+                options.ForwardedProtoHeaderName = "X-Forwarded-Proto";
+
+                //options.KnownNetworks.Clear();
+                //options.KnownProxies.Clear();
+
+                //options.KnownNetworks.Add(new IPNetwork(IPAddress.Any, 0));
+                //options.KnownNetworks.Add(new IPNetwork(IPAddress.Loopback, 32));
+                //options.KnownNetworks.Add(new IPNetwork(IPAddress.IPv6Any, 0));
+            });
         }
 
         private void ConfigureBaGetApplication(BaGetApplication app)
