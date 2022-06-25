@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Net;
+using System.Text;
 
 namespace BaGet
 {
@@ -94,6 +95,21 @@ namespace BaGet
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path.Value.Equals("/robots.txt", StringComparison.OrdinalIgnoreCase))
+                {
+                    var replyBody = "User-agent: *\r\nDisallow: /\r\n";
+                    context.Response.StatusCode = 200;
+                    await context.Response.BodyWriter.WriteAsync(Encoding.UTF8.GetBytes(replyBody), context.RequestAborted);
+                    await context.Response.CompleteAsync();
+                }
+                else
+                {
+                    await next();
+                }
+            });
+
             app.UseForwardedHeaders();
 
             var options = Configuration.Get<BaGetOptions>();
