@@ -96,6 +96,8 @@ namespace BaGet
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseForwardedHeaders();
+
             app.Use((context, next) =>
             {
                 Console.WriteLine();
@@ -120,8 +122,6 @@ namespace BaGet
                     await next();
                 }
             });
-
-            app.UseForwardedHeaders();
 
             var options = Configuration.Get<BaGetOptions>();
 
