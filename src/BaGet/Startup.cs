@@ -55,6 +55,7 @@ namespace BaGet
             services.AddSingleton<IConfigureOptions<MvcRazorRuntimeCompilationOptions>, ConfigureRazorRuntimeCompilation>();
 
             services.AddCors();
+
             services.Configure<ForwardedHeadersOptions>(options =>
             {
                 options.ForwardLimit = 4;
@@ -64,12 +65,11 @@ namespace BaGet
                 options.ForwardedHostHeaderName = "X-Forwarded-Host";
                 options.ForwardedProtoHeaderName = "X-Forwarded-Proto";
 
-                //options.KnownNetworks.Clear();
-                //options.KnownProxies.Clear();
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
 
-                //options.KnownNetworks.Add(new IPNetwork(IPAddress.Any, 0));
-                //options.KnownNetworks.Add(new IPNetwork(IPAddress.Loopback, 32));
-                //options.KnownNetworks.Add(new IPNetwork(IPAddress.IPv6Any, 0));
+                options.KnownNetworks.Add(new IPNetwork(IPAddress.Any, 0));
+                options.KnownNetworks.Add(new IPNetwork(IPAddress.IPv6Any, 0));
             });
         }
 
