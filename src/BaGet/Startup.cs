@@ -103,7 +103,7 @@ namespace BaGet
                     Console.WriteLine($"{kv.Key} - {kv.Value.ToString()}");
                 }
                 return next();
-            };
+            });
 
             app.Use(async (context, next) =>
             {
