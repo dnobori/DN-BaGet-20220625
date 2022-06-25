@@ -95,6 +95,16 @@ namespace BaGet
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.Use((context, next) =>
+            {
+                Console.WriteLine();
+                foreach (var kv in context.Request.Headers)
+                {
+                    Console.WriteLine($"{kv.Key} - {kv.Value.ToString()}");
+                }
+                return next();
+            };
+
             app.Use(async (context, next) =>
             {
                 if (context.Request.Path.Value.Equals("/robots.txt", StringComparison.OrdinalIgnoreCase))
