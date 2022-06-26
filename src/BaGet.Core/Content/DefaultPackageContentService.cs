@@ -53,7 +53,14 @@ namespace BaGet.Core
                 return null;
             }
 
-            await _packages.AddDownloadAsync(id, version, cancellationToken);
+            try
+            {
+                // 2022.6.26 パッケージのダウンロード回数のインクリメント時には DB の書き込み競合が発生する
+                // 可能性があるが、無視して差し支え無い。
+                await _packages.AddDownloadAsync(id, version, cancellationToken);
+            }
+            catch { }
+
             return await _storage.GetPackageStreamAsync(id, version, cancellationToken);
         }
 
